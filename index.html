@@ -6,9 +6,6 @@
   <title>Трекер ваги та обʼємів</title>
 
   <style>
-    /* =========================
-       Base (shared)
-    ========================= */
     :root{
       --bg: #0f1115;
       --card: #151925;
@@ -19,9 +16,6 @@
 
       --primary: #5b8cff;
       --primaryText: #081022;
-
-      --danger: #ff5b7a;
-      --ok: #2bd576;
 
       --radius: 16px;
       --pad: 14px;
@@ -35,6 +29,7 @@
 
     * { box-sizing: border-box; }
     html, body { height: 100%; }
+
     body {
       margin: 0;
       background: var(--bg);
@@ -65,6 +60,7 @@
       margin: 0;
       line-height: 1.2;
     }
+
     .subtitle{
       margin: 6px 0 0;
       color: var(--muted);
@@ -92,6 +88,10 @@
       gap: 8px;
     }
 
+    .span-2{
+      grid-column: 1 / -1;
+    }
+
     label{
       font-size: 12px;
       color: var(--muted);
@@ -110,7 +110,7 @@
       color: var(--muted);
     }
 
-    input, textarea, select{
+    input, textarea{
       width: 100%;
       border-radius: 14px;
       border: 1px solid var(--border);
@@ -122,7 +122,7 @@
       transition: border-color .15s, box-shadow .15s;
     }
 
-    input:focus, textarea:focus, select:focus{
+    input:focus, textarea:focus{
       border-color: rgba(91,140,255,.55);
       box-shadow: 0 0 0 4px var(--inputFocus);
     }
@@ -132,8 +132,6 @@
       resize: vertical;
       line-height: 1.35;
     }
-
-    .span-2{ grid-column: 1 / -1; }
 
     .row{
       display:flex;
@@ -153,6 +151,7 @@
       transition: transform .06s, filter .15s;
       user-select: none;
     }
+
     .btn:active{ transform: translateY(1px); }
 
     .btn-primary{
@@ -185,54 +184,9 @@
       line-height: 1.35;
       display: none;
     }
+
     .msg.ok{ border-color: rgba(43,213,118,.35); }
     .msg.err{ border-color: rgba(255,91,122,.35); }
-
-    details{
-      margin-top: 12px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      background: rgba(255,255,255,.02);
-    }
-
-    summary{
-      cursor: pointer;
-      list-style: none;
-      padding: 12px 12px;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 10px;
-      user-select: none;
-    }
-    summary::-webkit-details-marker{ display:none; }
-
-    .summary-title{
-      font-weight: 800;
-      font-size: 14px;
-    }
-    .summary-sub{
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-    .chev{
-      width: 10px;
-      height: 10px;
-      border-right: 2px solid var(--muted);
-      border-bottom: 2px solid var(--muted);
-      transform: rotate(45deg);
-      transition: transform .15s;
-      margin-left: auto;
-      opacity: .9;
-    }
-    details[open] .chev{ transform: rotate(225deg); }
-
-    .details-body{
-      padding: 12px;
-      border-top: 1px solid var(--border);
-    }
 
     .mini{
       font-size: 12px;
@@ -241,11 +195,9 @@
 
     @media (max-width: 420px){
       .grid{ grid-template-columns: 1fr; }
+      .span-2{ grid-column: auto; }
     }
 
-    /* =========================
-       THEME 1: night-card (default)
-    ========================= */
     body[data-theme="night-card"]{
       --bg: #0f1115;
       --card: #151925;
@@ -259,9 +211,6 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    /* =========================
-       THEME 2: light-clean
-    ========================= */
     body[data-theme="light-clean"]{
       --bg: #f6f7fb;
       --card: #ffffff;
@@ -275,9 +224,6 @@
       --shadow: 0 10px 24px rgba(13,18,32,.08);
     }
 
-    /* =========================
-       THEME 3: soft-green
-    ========================= */
     body[data-theme="soft-green"]{
       --bg: #0f1412;
       --card: #121b16;
@@ -297,7 +243,7 @@
   <div class="wrap">
     <div class="header">
       <div>
-        <h1 class="title">Трекер Ваги та обʼємів</h1>
+        <h1 class="title">Трекер ваги та обʼємів</h1>
         <p class="subtitle">Запиши заміри — я збережу їх у таблицю та покажу прогрес.</p>
       </div>
       <div class="mini" id="userTag"></div>
@@ -305,14 +251,13 @@
 
     <div class="card">
       <form id="form">
-        <!-- MAIN -->
         <div class="grid">
-          <div class="field">
+          <div class="field span-2">
             <label for="date">Дата</label>
             <input id="date" name="date" type="date" required />
           </div>
 
-          <div class="field">
+          <div class="field span-2">
             <label for="weight">Вага (кг) <span class="badge">обовʼязково</span></label>
             <input id="weight" name="weight_kg" type="number" inputmode="decimal" step="0.1" min="20" max="300" placeholder="Напр. 82.4" required />
           </div>
@@ -333,8 +278,38 @@
           </div>
 
           <div class="field">
-            <label for="bodyFat">Жир (%) <span class="badge">опційно</span></label>
+            <label for="bodyFat">Жир (%)</label>
             <input id="bodyFat" name="body_fat_pct" type="number" inputmode="decimal" step="0.1" min="3" max="70" placeholder="Напр. 22.5" />
+          </div>
+
+          <div class="field">
+            <label for="neck">Шия (см)</label>
+            <input id="neck" name="neck_cm" type="number" inputmode="decimal" step="0.1" min="20" max="80" placeholder="Напр. 38" />
+          </div>
+
+          <div class="field">
+            <label for="shoulders">Плечі (см)</label>
+            <input id="shoulders" name="shoulders_cm" type="number" inputmode="decimal" step="0.1" min="60" max="200" placeholder="Напр. 118" />
+          </div>
+
+          <div class="field">
+            <label for="biceps">Біцепс (см)</label>
+            <input id="biceps" name="biceps_cm" type="number" inputmode="decimal" step="0.1" min="15" max="80" placeholder="Напр. 34" />
+          </div>
+
+          <div class="field">
+            <label for="forearm">Передпліччя (см)</label>
+            <input id="forearm" name="forearm_cm" type="number" inputmode="decimal" step="0.1" min="15" max="70" placeholder="Напр. 28" />
+          </div>
+
+          <div class="field">
+            <label for="thigh">Стегно (см)</label>
+            <input id="thigh" name="thigh_cm" type="number" inputmode="decimal" step="0.1" min="25" max="120" placeholder="Напр. 60" />
+          </div>
+
+          <div class="field">
+            <label for="calf">Гомілка (см)</label>
+            <input id="calf" name="calf_cm" type="number" inputmode="decimal" step="0.1" min="20" max="80" placeholder="Напр. 38" />
           </div>
 
           <div class="field span-2">
@@ -343,108 +318,6 @@
           </div>
         </div>
 
-        <!-- DETAILS: MEASUREMENTS -->
-        <details>
-          <summary>
-            <div>
-              <div class="summary-title">Додаткові заміри</div>
-              <div class="summary-sub">Шия, плечі, руки, ноги — якщо хочеш більше точності</div>
-            </div>
-            <span class="chev" aria-hidden="true"></span>
-          </summary>
-          <div class="details-body">
-            <div class="grid">
-              <div class="field">
-                <label for="neck">Шия (см)</label>
-                <input id="neck" name="neck_cm" type="number" inputmode="decimal" step="0.1" min="20" max="80" placeholder="Напр. 38" />
-              </div>
-
-              <div class="field">
-                <label for="shoulders">Плечі (см)</label>
-                <input id="shoulders" name="shoulders_cm" type="number" inputmode="decimal" step="0.1" min="60" max="200" placeholder="Напр. 118" />
-              </div>
-
-              <div class="field">
-                <label for="biceps">Біцепс (см)</label>
-                <input id="biceps" name="biceps_cm" type="number" inputmode="decimal" step="0.1" min="15" max="80" placeholder="Напр. 34" />
-              </div>
-
-              <div class="field">
-                <label for="forearm">Передпліччя (см)</label>
-                <input id="forearm" name="forearm_cm" type="number" inputmode="decimal" step="0.1" min="15" max="70" placeholder="Напр. 28" />
-              </div>
-
-              <div class="field">
-                <label for="thigh">Стегно (см)</label>
-                <input id="thigh" name="thigh_cm" type="number" inputmode="decimal" step="0.1" min="25" max="120" placeholder="Напр. 60" />
-              </div>
-
-              <div class="field">
-                <label for="calf">Гомілка (см)</label>
-                <input id="calf" name="calf_cm" type="number" inputmode="decimal" step="0.1" min="20" max="80" placeholder="Напр. 38" />
-              </div>
-            </div>
-
-            <div class="hint">
-              Якщо міряєш шию + талію стабільно, потім можна рахувати приблизний % жиру (за методиками типу US Navy).
-            </div>
-          </div>
-        </details>
-
-        <!-- DETAILS: WELLBEING -->
-        <details>
-          <summary>
-            <div>
-              <div class="summary-title">Стан / звички</div>
-              <div class="summary-sub">Енергія, сон, вода — щоб бачити причини коливань ваги</div>
-            </div>
-            <span class="chev" aria-hidden="true"></span>
-          </summary>
-          <div class="details-body">
-            <div class="grid">
-              <div class="field">
-                <label for="energy">Енергія (1–5)</label>
-                <select id="energy" name="energy_1_5">
-                  <option value="">—</option>
-                  <option value="1">1 — дуже погано</option>
-                  <option value="2">2</option>
-                  <option value="3">3 — нормально</option>
-                  <option value="4">4</option>
-                  <option value="5">5 — супер</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="mood">Настрій (1–5)</label>
-                <select id="mood" name="mood_1_5">
-                  <option value="">—</option>
-                  <option value="1">1 — жах</option>
-                  <option value="2">2</option>
-                  <option value="3">3 — ок</option>
-                  <option value="4">4</option>
-                  <option value="5">5 — відмінно</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="sleep">Сон (год)</label>
-                <input id="sleep" name="sleep_hours" type="number" inputmode="decimal" step="0.1" min="0" max="16" placeholder="Напр. 7.5" />
-              </div>
-
-              <div class="field">
-                <label for="water">Вода (л)</label>
-                <input id="water" name="water_l" type="number" inputmode="decimal" step="0.1" min="0" max="10" placeholder="Напр. 2.0" />
-              </div>
-
-              <div class="field span-2">
-                <label for="steps">Кроки (шт) <span class="badge">опційно</span></label>
-                <input id="steps" name="steps" type="number" inputmode="numeric" step="1" min="0" max="100000" placeholder="Напр. 9500" />
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <!-- ACTIONS -->
         <div class="row">
           <button class="btn btn-primary" id="saveBtn" type="submit">Зберегти</button>
           <button class="btn btn-ghost" id="closeBtn" type="button">Закрити</button>
@@ -462,17 +335,12 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <script>
-    // =========================
-    // CONFIG
-    // =========================
-    const WEBHOOK_URL = "https://YOUR_WEBHOOK_DOMAIN/weight-tracker"; // <-- replace
+    const WEBHOOK_URL = "https://YOUR_WEBHOOK_DOMAIN/weight-tracker";
 
-    // Theme from query string ?theme=light-clean
     const qs = new URLSearchParams(location.search);
     const theme = qs.get("theme");
     if (theme) document.body.setAttribute("data-theme", theme);
 
-    // Default date to today (local)
     const dateEl = document.getElementById("date");
     const today = new Date();
     const yyyy = today.getFullYear();
@@ -480,7 +348,6 @@
     const dd = String(today.getDate()).padStart(2, "0");
     dateEl.value = `${yyyy}-${mm}-${dd}`;
 
-    // Telegram context
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
@@ -509,13 +376,6 @@
       return Number.isFinite(n) ? n : null;
     }
 
-    function toIntOrNull(v) {
-      if (v === "" || v === null || typeof v === "undefined") return null;
-      const n = Number(v);
-      if (!Number.isFinite(n)) return null;
-      return Math.round(n);
-    }
-
     function pickOrNull(v) {
       const s = (v || "").toString().trim();
       return s ? s : null;
@@ -529,7 +389,6 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Required weight validation
       const weight = toNumOrNull(form.weight_kg.value);
       if (weight === null || weight < 20 || weight > 300) {
         showMessage("Перевір вагу: має бути число 20–300 кг.", "err");
@@ -544,13 +403,11 @@
         date: form.date.value,
         weight_kg: weight,
 
-        // core
         waist_cm: toNumOrNull(form.waist_cm.value),
         hips_cm: toNumOrNull(form.hips_cm.value),
         chest_cm: toNumOrNull(form.chest_cm.value),
         body_fat_pct: toNumOrNull(form.body_fat_pct.value),
 
-        // extra measurements
         neck_cm: toNumOrNull(form.neck_cm.value),
         shoulders_cm: toNumOrNull(form.shoulders_cm.value),
         biceps_cm: toNumOrNull(form.biceps_cm.value),
@@ -558,20 +415,13 @@
         thigh_cm: toNumOrNull(form.thigh_cm.value),
         calf_cm: toNumOrNull(form.calf_cm.value),
 
-        // wellbeing
-        energy_1_5: toIntOrNull(form.energy_1_5.value),
-        mood_1_5: toIntOrNull(form.mood_1_5.value),
-        sleep_hours: toNumOrNull(form.sleep_hours.value),
-        water_l: toNumOrNull(form.water_l.value),
-        steps: toIntOrNull(form.steps.value),
-
         note: pickOrNull(form.note.value),
 
         tz: Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Kiev",
         source: "webapp",
 
         telegram: tg ? {
-          initData: tg.initData || null, // verify on server
+          initData: tg.initData || null,
           user: tg.initDataUnsafe?.user || null
         } : null
       };
@@ -589,8 +439,6 @@
         }
 
         showMessage("✅ Збережено! Можеш закривати форму.", "ok");
-        // setTimeout(() => tg ? tg.close() : window.close(), 900);
-
       } catch (err) {
         console.error(err);
         showMessage("❌ Не вдалося зберегти. Перевір інтернет або спробуй ще раз.", "err");
