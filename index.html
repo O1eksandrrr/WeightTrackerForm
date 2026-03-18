@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Трекер ваги та обʼємів</title>
+  <title>Трекер замірів тіла</title>
 
   <style>
     :root{
@@ -16,12 +16,15 @@
 
       --primary: #5b8cff;
       --primaryText: #081022;
-
-      --radius: 16px;
-      --gap: 12px;
+      --accent: #7aa2ff;
 
       --inputBg: rgba(255,255,255,.04);
       --inputFocus: rgba(91,140,255,.35);
+      --zoneBg: rgba(91,140,255,.18);
+      --zoneBorder: rgba(91,140,255,.55);
+      --zoneActive: rgba(91,140,255,.30);
+
+      --radius: 18px;
       --btnRadius: 14px;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
     }
@@ -29,8 +32,8 @@
     * { box-sizing: border-box; }
     html, body { height: 100%; }
 
-    body {
-      margin: 0;
+    body{
+      margin:0;
       background: var(--bg);
       color: var(--text);
       font-family: var(--font);
@@ -39,22 +42,20 @@
     }
 
     .wrap{
-      max-width: 560px;
+      max-width: 760px;
       margin: 0 auto;
-      padding: 18px 14px 24px;
+      padding: 16px 14px 28px;
     }
 
     .header{
-      display: block;
       margin-bottom: 14px;
     }
 
     .title{
-      font-size: 20px;
+      margin:0;
+      font-size: 22px;
       font-weight: 800;
-      letter-spacing: .2px;
-      margin: 0;
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .subtitle{
@@ -67,22 +68,22 @@
     .card{
       background: var(--card);
       border: 1px solid var(--border);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
-      border-radius: 16px;
       padding: 14px;
-    }
-
-    .grid{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--gap);
     }
 
     .field{
       display:flex;
-      flex-direction: column;
+      flex-direction:column;
       gap: 8px;
-      min-width: 0;
+      min-width:0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
     .span-2{
@@ -92,33 +93,32 @@
     label{
       font-size: 12px;
       color: var(--muted);
-      letter-spacing: .2px;
       display:flex;
-      align-items: center;
-      gap: 8px;
-      line-height: 1.2;
+      align-items:center;
+      gap:8px;
+      line-height:1.2;
     }
 
     .badge{
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
+      font-size:11px;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
       background: rgba(255,255,255,.03);
       color: var(--muted);
       white-space: nowrap;
     }
 
     input, textarea{
-      width: 100%;
-      border-radius: 14px;
-      border: 1px solid var(--border);
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--border);
       background: var(--inputBg);
       color: var(--text);
-      padding: 12px 12px;
+      padding: 12px;
       font-size: 15px;
-      outline: none;
-      transition: border-color .15s, box-shadow .15s;
+      outline:none;
+      transition: border-color .15s, box-shadow .15s, background .15s;
     }
 
     input:focus, textarea:focus{
@@ -127,28 +127,134 @@
     }
 
     textarea{
-      min-height: 92px;
+      min-height: 88px;
       resize: vertical;
       line-height: 1.35;
     }
 
-    .row{
+    .top-block{
+      margin-bottom: 14px;
+    }
+
+    .body-card{
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255,255,255,.02);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .body-stage{
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .body-image{
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .zone{
+      position:absolute;
+      appearance:none;
+      border:1px solid var(--zoneBorder);
+      background: var(--zoneBg);
+      border-radius: 999px;
+      cursor:pointer;
+      transition: background .15s, transform .1s, box-shadow .15s;
+      box-shadow: 0 0 0 0 rgba(91,140,255,0);
+    }
+
+    .zone:hover,
+    .zone.active{
+      background: var(--zoneActive);
+      box-shadow: 0 0 0 4px rgba(91,140,255,.16);
+    }
+
+    .zone:active{
+      transform: scale(.98);
+    }
+
+    .measure-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .measure-card{
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(255,255,255,.02);
+      padding: 10px;
+      transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+
+    .measure-card.active{
+      border-color: rgba(91,140,255,.55);
+      box-shadow: 0 0 0 4px rgba(91,140,255,.14);
+      background: rgba(91,140,255,.04);
+    }
+
+    .measure-head{
       display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
+      align-items:center;
+      justify-content:space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .measure-title{
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+
+    .mini-help{
+      appearance:none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-size: 12px;
+      font-weight: 800;
+      line-height:1;
+      flex: 0 0 auto;
+    }
+
+    .bottom-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
     }
 
     .btn{
-      appearance: none;
-      border: 0;
+      appearance:none;
+      border:0;
       border-radius: var(--btnRadius);
       padding: 12px 14px;
       font-weight: 800;
       font-size: 15px;
-      cursor: pointer;
+      cursor:pointer;
       transition: transform .06s, filter .15s;
-      user-select: none;
+      user-select:none;
     }
 
     .btn:active{
@@ -158,14 +264,14 @@
     .btn-primary{
       background: var(--primary);
       color: var(--primaryText);
-      flex: 1;
-      min-width: 170px;
+      flex:1;
+      min-width:170px;
     }
 
     .btn-ghost{
       background: transparent;
-      border: 1px solid var(--border);
       color: var(--text);
+      border:1px solid var(--border);
     }
 
     .hint{
@@ -183,32 +289,82 @@
       background: rgba(255,255,255,.03);
       font-size: 13px;
       line-height: 1.35;
-      display: none;
+      display:none;
     }
 
-    .msg.ok{
-      border-color: rgba(43,213,118,.35);
+    .msg.ok{ border-color: rgba(43,213,118,.35); }
+    .msg.err{ border-color: rgba(255,91,122,.35); }
+
+    .modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 1000;
     }
 
-    .msg.err{
-      border-color: rgba(255,91,122,.35);
+    .modal.open{
+      display:flex;
     }
 
-    @media (max-width: 420px){
-      .grid{
-        grid-template-columns: 1fr 1fr;
-      }
+    .modal-card{
+      width:100%;
+      max-width: 420px;
+      background: var(--card);
+      color: var(--text);
+      border:1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
 
-      .span-2{
-        grid-column: 1 / -1;
+    .modal-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+
+    .modal-title{
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin:0;
+    }
+
+    .modal-close{
+      appearance:none;
+      width:32px;
+      height:32px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      cursor:pointer;
+      font-size:18px;
+      line-height:1;
+      flex: 0 0 auto;
+    }
+
+    .modal-text{
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-line;
+    }
+
+    @media (max-width: 520px){
+      .grid,
+      .measure-grid{
+        grid-template-columns: 1fr;
       }
 
       .title{
-        font-size: 18px;
-      }
-
-      .subtitle{
-        font-size: 12px;
+        font-size: 19px;
       }
 
       input, textarea{
@@ -216,31 +372,9 @@
         padding: 11px 10px;
       }
 
-      .card{
+      .card, .body-card{
         padding: 12px;
       }
-
-      .row{
-        gap: 8px;
-      }
-
-      .btn{
-        font-size: 14px;
-        padding: 12px 12px;
-      }
-    }
-
-    body[data-theme="night-card"]{
-      --bg: #0f1115;
-      --card: #151925;
-      --text: #eef2ff;
-      --muted: rgba(238,242,255,.70);
-      --border: rgba(238,242,255,.10);
-      --primary: #5b8cff;
-      --primaryText: #071025;
-      --inputBg: rgba(255,255,255,.04);
-      --inputFocus: rgba(91,140,255,.30);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
     body[data-theme="light-clean"]{
@@ -251,8 +385,12 @@
       --border: rgba(13,18,32,.10);
       --primary: #2e6bff;
       --primaryText: #ffffff;
+      --accent: #2e6bff;
       --inputBg: #f3f5ff;
       --inputFocus: rgba(46,107,255,.22);
+      --zoneBg: rgba(46,107,255,.12);
+      --zoneBorder: rgba(46,107,255,.42);
+      --zoneActive: rgba(46,107,255,.20);
       --shadow: 0 10px 24px rgba(13,18,32,.08);
     }
 
@@ -264,8 +402,12 @@
       --border: rgba(235,255,245,.10);
       --primary: #34d399;
       --primaryText: #06130e;
+      --accent: #34d399;
       --inputBg: rgba(255,255,255,.04);
       --inputFocus: rgba(52,211,153,.22);
+      --zoneBg: rgba(52,211,153,.12);
+      --zoneBorder: rgba(52,211,153,.42);
+      --zoneActive: rgba(52,211,153,.20);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
     }
   </style>
@@ -274,88 +416,132 @@
 <body data-theme="night-card">
   <div class="wrap">
     <div class="header">
-      <div>
-        <h1 class="title">Трекер ваги та обʼємів</h1>
-        <p class="subtitle">Запиши заміри — я збережу їх для відслідковування прогресу.</p>
-      </div>
+      <h1 class="title">Трекер замірів тіла</h1>
+      <p class="subtitle">Обери ділянку на силуеті або заповни заміри вручну. Біля кожного поля є підказка.</p>
     </div>
 
     <div class="card">
       <form id="form">
-        <div class="grid">
-          <div class="field span-2">
+        <div class="top-block">
+          <div class="field">
             <label for="date">Дата</label>
             <input id="date" name="date" type="date" required />
           </div>
+        </div>
 
-          <div class="field span-2">
+        <div class="body-card">
+          <div class="body-stage" id="bodyStage">
+            <img id="bodyImage" class="body-image" src="./images/MAN.png" alt="Силует тіла" />
+
+            <button type="button" class="zone" data-part="shoulders" title="Плечі"
+              style="top: 14.5%; left: 21%; width: 58%; height: 5.2%;"></button>
+
+            <button type="button" class="zone" data-part="chest" title="Груди"
+              style="top: 20.5%; left: 27%; width: 46%; height: 6.8%;"></button>
+
+            <button type="button" class="zone" data-part="waist" title="Талія"
+              style="top: 31.5%; left: 33%; width: 34%; height: 5.3%;"></button>
+
+            <button type="button" class="zone" data-part="hips" title="Стегна"
+              style="top: 38.5%; left: 28%; width: 44%; height: 7%;"></button>
+
+            <button type="button" class="zone" data-part="biceps" title="Біцепс"
+              style="top: 22%; left: 10%; width: 10%; height: 11%; border-radius: 24px;"></button>
+
+            <button type="button" class="zone" data-part="biceps" title="Біцепс"
+              style="top: 22%; left: 80%; width: 10%; height: 11%; border-radius: 24px;"></button>
+
+            <button type="button" class="zone" data-part="forearm" title="Передпліччя"
+              style="top: 31.5%; left: 4%; width: 10%; height: 12%; border-radius: 24px;"></button>
+
+            <button type="button" class="zone" data-part="forearm" title="Передпліччя"
+              style="top: 31.5%; left: 86%; width: 10%; height: 12%; border-radius: 24px;"></button>
+
+            <button type="button" class="zone" data-part="calf" title="Гомілка"
+              style="top: 66.5%; left: 34%; width: 10%; height: 15%; border-radius: 24px;"></button>
+
+            <button type="button" class="zone" data-part="calf" title="Гомілка"
+              style="top: 66.5%; left: 56%; width: 10%; height: 15%; border-radius: 24px;"></button>
+          </div>
+        </div>
+
+        <div class="measure-grid">
+          <div class="measure-card" data-card="shoulders">
+            <div class="measure-head">
+              <div class="measure-title">Плечі (см)</div>
+              <button class="mini-help" type="button" data-help="shoulders">i</button>
+            </div>
+            <input name="shoulders_cm" type="number" step="0.1" inputmode="decimal" placeholder="Напр. 118" />
+          </div>
+
+          <div class="measure-card" data-card="chest">
+            <div class="measure-head">
+              <div class="measure-title">Груди (см)</div>
+              <button class="mini-help" type="button" data-help="chest">i</button>
+            </div>
+            <input name="chest_cm" type="number" step="0.1" inputmode="decimal" placeholder="Напр. 101" />
+          </div>
+
+          <div class="measure-card" data-card="waist">
+            <div class="measure-head">
+              <div class="measure-title">Талія (см)</div>
+              <button class="mini-help" type="button" data-help="waist">i</button>
+            </div>
+            <input name="waist_cm" type="number" step="0.1" inputmode="decimal" placeholder="Напр. 92" />
+          </div>
+
+          <div class="measure-card" data-card="hips">
+            <div class="measure-head">
+              <div class="measure-title">Стегна (см)</div>
+              <button class="mini-help" type="button" data-help="hips">i</button>
+            </div>
+            <input name="hips_cm" type="number" step="0.1" inputmode="decimal" placeholder="Напр. 104" />
+          </div>
+
+          <div class="measure-card" data-card="biceps">
+            <div class="measure-head">
+              <div class="measure-title">Біцепс (см)</div>
+              <button class="mini-help" type="button" data-help="biceps">i</button>
+            </div>
+            <input name="biceps_cm" type="number" step="0.1" inputmode="decimal" placeholder="Напр. 34" />
+          </div>
+
+          <div class="measure-card" data-card="forearm">
+            <div class="measure-head">
+              <div class="measure-title">Передпліччя (см)</div>
+              <button class="mini-help" type="button" data-help="forearm">i</button>
+            </div>
+            <input name="forearm_cm" type="number" step="0.1" inputmode="decimal" placeholder="Напр. 28" />
+          </div>
+
+          <div class="measure-card" data-card="calf">
+            <div class="measure-head">
+              <div class="measure-title">Гомілка (см)</div>
+              <button class="mini-help" type="button" data-help="calf">i</button>
+            </div>
+            <input name="calf_cm" type="number" step="0.1" inputmode="decimal" placeholder="Напр. 38" />
+          </div>
+        </div>
+
+        <div class="bottom-grid">
+          <div class="field">
             <label for="weight">Вага (кг) <span class="badge">обовʼязково</span></label>
             <input id="weight" name="weight_kg" type="number" inputmode="decimal" step="0.1" min="20" max="300" placeholder="Напр. 82.4" required />
           </div>
 
           <div class="field">
-            <label for="waist">Талія (см)</label>
-            <input id="waist" name="waist_cm" type="number" inputmode="decimal" step="0.1" min="30" max="200" placeholder="Напр. 92" />
-          </div>
-
-          <div class="field">
-            <label for="hips">Стегна (см)</label>
-            <input id="hips" name="hips_cm" type="number" inputmode="decimal" step="0.1" min="30" max="250" placeholder="Напр. 104" />
-          </div>
-
-          <div class="field">
-            <label for="chest">Груди (см)</label>
-            <input id="chest" name="chest_cm" type="number" inputmode="decimal" step="0.1" min="30" max="200" placeholder="Напр. 101" />
-          </div>
-
-          <div class="field">
-            <label for="bodyFat">Жир (%)</label>
-            <input id="bodyFat" name="body_fat_pct" type="number" inputmode="decimal" step="0.1" min="3" max="70" placeholder="Напр. 22.5" />
-          </div>
-
-          <div class="field">
-            <label for="neck">Шия (см)</label>
-            <input id="neck" name="neck_cm" type="number" inputmode="decimal" step="0.1" min="20" max="80" placeholder="Напр. 38" />
-          </div>
-
-          <div class="field">
-            <label for="shoulders">Плечі (см)</label>
-            <input id="shoulders" name="shoulders_cm" type="number" inputmode="decimal" step="0.1" min="60" max="200" placeholder="Напр. 118" />
-          </div>
-
-          <div class="field">
-            <label for="biceps">Біцепс (см)</label>
-            <input id="biceps" name="biceps_cm" type="number" inputmode="decimal" step="0.1" min="15" max="80" placeholder="Напр. 34" />
-          </div>
-
-          <div class="field">
-            <label for="forearm">Передпліччя (см)</label>
-            <input id="forearm" name="forearm_cm" type="number" inputmode="decimal" step="0.1" min="15" max="70" placeholder="Напр. 28" />
-          </div>
-
-          <div class="field">
-            <label for="thigh">Стегно (см)</label>
-            <input id="thigh" name="thigh_cm" type="number" inputmode="decimal" step="0.1" min="25" max="120" placeholder="Напр. 60" />
-          </div>
-
-          <div class="field">
-            <label for="calf">Гомілка (см)</label>
-            <input id="calf" name="calf_cm" type="number" inputmode="decimal" step="0.1" min="20" max="80" placeholder="Напр. 38" />
-          </div>
-
-          <div class="field span-2">
             <label for="note">Примітка</label>
-            <textarea id="note" name="note" maxlength="250" placeholder="Напр.: ввечері після тренування, набряк, мало води..."></textarea>
+            <textarea id="note" name="note" maxlength="250" placeholder="Напр.: заміри вранці, після тренування, була затримка води..."></textarea>
           </div>
         </div>
 
-        <div class="row">
+        <div class="actions">
           <button class="btn btn-primary" id="saveBtn" type="submit">Зберегти</button>
           <button class="btn btn-ghost" id="closeBtn" type="button">Закрити</button>
         </div>
 
         <div class="hint">
-          Порада: вагу краще фіксувати вранці після туалету, до їжі. Обʼєми — в одному й тому ж місці стрічкою.
+          Порада: усі заміри краще робити в однакових умовах. Вагу найкраще фіксувати вранці після туалету, до їжі.
         </div>
 
         <div class="msg" id="msg"></div>
@@ -363,14 +549,63 @@
     </div>
   </div>
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <div class="modal" id="helpModal">
+    <div class="modal-card">
+      <div class="modal-top">
+        <h3 class="modal-title" id="helpTitle">Підказка</h3>
+        <button class="modal-close" id="closeHelp" type="button">×</button>
+      </div>
+      <div class="modal-text" id="helpText"></div>
+    </div>
+  </div>
 
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    const WEBHOOK_URL = "https://firstbs.app.n8n.cloud/webhook/weight-tracker";
+    const WEBHOOK_URL = "https://YOUR_WEBHOOK_DOMAIN/weight-tracker";
+
+    const BODY_IMAGES = {
+      male: "./images/MAN.png",
+      female: "./images/WOMAN.png"
+    };
+
+    const helpContent = {
+      shoulders: {
+        title: "Плечі",
+        text: "Міряй по найширшій частині плечового поясу.\nСтрічка має проходити рівно, без перекосу.\nНе затягуй занадто сильно."
+      },
+      chest: {
+        title: "Груди",
+        text: "Міряй по найширшій частині грудної клітки.\nСтрічку тримай горизонтально.\nНе надувай груди спеціально."
+      },
+      waist: {
+        title: "Талія",
+        text: "Міряй найвужчу частину талії або одну стабільну точку трохи вище пупка.\nГоловне — завжди міряти в одному й тому ж місці."
+      },
+      hips: {
+        title: "Стегна",
+        text: "Міряй по найширшій частині таза / сідниць.\nСтій рівно, ноги разом.\nСтрічка має йти паралельно підлозі."
+      },
+      biceps: {
+        title: "Біцепс",
+        text: "Міряй руку в найширшій частині плеча.\nКраще без сильного напруження, якщо хочеш стабільні заміри."
+      },
+      forearm: {
+        title: "Передпліччя",
+        text: "Міряй у найширшій частині передпліччя.\nРуку тримай розслабленою."
+      },
+      calf: {
+        title: "Гомілка",
+        text: "Міряй у найширшій частині литки.\nВага тіла має бути розподілена рівномірно на обидві ноги."
+      }
+    };
 
     const qs = new URLSearchParams(location.search);
     const theme = qs.get("theme");
-    if (theme) document.body.setAttribute("data-theme", theme);
+    const gender = (qs.get("gender") || "male").toLowerCase();
+
+    if (theme) {
+      document.body.setAttribute("data-theme", theme);
+    }
 
     const dateEl = document.getElementById("date");
     const today = new Date();
@@ -385,10 +620,22 @@
       tg.expand();
     }
 
+    const bodyImage = document.getElementById("bodyImage");
+    bodyImage.src = BODY_IMAGES[gender] || BODY_IMAGES.male;
+
     const form = document.getElementById("form");
     const msg = document.getElementById("msg");
     const saveBtn = document.getElementById("saveBtn");
     const closeBtn = document.getElementById("closeBtn");
+
+    const helpModal = document.getElementById("helpModal");
+    const helpTitle = document.getElementById("helpTitle");
+    const helpText = document.getElementById("helpText");
+    const closeHelp = document.getElementById("closeHelp");
+
+    const zones = Array.from(document.querySelectorAll(".zone"));
+    const measureCards = Array.from(document.querySelectorAll(".measure-card"));
+    const inputs = Array.from(document.querySelectorAll(".measure-card input"));
 
     function showMessage(text, type) {
       msg.textContent = text;
@@ -406,6 +653,72 @@
       const s = (v || "").toString().trim();
       return s ? s : null;
     }
+
+    function clearActive() {
+      zones.forEach(z => z.classList.remove("active"));
+      measureCards.forEach(c => c.classList.remove("active"));
+    }
+
+    function activatePart(part, scroll = false) {
+      clearActive();
+
+      zones
+        .filter(z => z.dataset.part === part)
+        .forEach(z => z.classList.add("active"));
+
+      const card = document.querySelector(`.measure-card[data-card="${part}"]`);
+      if (card) {
+        card.classList.add("active");
+        const input = card.querySelector("input");
+        if (input) {
+          input.focus({ preventScroll: true });
+          if (scroll) {
+            card.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      }
+    }
+
+    function openHelp(key) {
+      const item = helpContent[key];
+      if (!item) return;
+      helpTitle.textContent = item.title;
+      helpText.textContent = item.text;
+      helpModal.classList.add("open");
+    }
+
+    function closeHelpModal() {
+      helpModal.classList.remove("open");
+    }
+
+    zones.forEach(zone => {
+      zone.addEventListener("click", () => {
+        const part = zone.dataset.part;
+        activatePart(part, true);
+        openHelp(part);
+      });
+    });
+
+    measureCards.forEach(card => {
+      const part = card.dataset.card;
+      const input = card.querySelector("input");
+
+      input.addEventListener("focus", () => activatePart(part, false));
+      input.addEventListener("click", () => activatePart(part, false));
+    });
+
+    document.querySelectorAll(".mini-help").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.help;
+        activatePart(key, false);
+        openHelp(key);
+      });
+    });
+
+    closeHelp.addEventListener("click", closeHelpModal);
+    helpModal.addEventListener("click", (e) => {
+      if (e.target === helpModal) closeHelpModal();
+    });
 
     closeBtn.addEventListener("click", () => {
       if (tg) tg.close();
@@ -425,22 +738,19 @@
       saveBtn.style.filter = "grayscale(30%) opacity(0.85)";
 
       const payload = {
-        type: "body_checkin_full",
+        type: "body_checkin_visual",
+        gender,
         date: form.date.value,
-        weight_kg: weight,
 
+        shoulders_cm: toNumOrNull(form.shoulders_cm.value),
+        chest_cm: toNumOrNull(form.chest_cm.value),
         waist_cm: toNumOrNull(form.waist_cm.value),
         hips_cm: toNumOrNull(form.hips_cm.value),
-        chest_cm: toNumOrNull(form.chest_cm.value),
-        body_fat_pct: toNumOrNull(form.body_fat_pct.value),
-
-        neck_cm: toNumOrNull(form.neck_cm.value),
-        shoulders_cm: toNumOrNull(form.shoulders_cm.value),
         biceps_cm: toNumOrNull(form.biceps_cm.value),
         forearm_cm: toNumOrNull(form.forearm_cm.value),
-        thigh_cm: toNumOrNull(form.thigh_cm.value),
         calf_cm: toNumOrNull(form.calf_cm.value),
 
+        weight_kg: weight,
         note: pickOrNull(form.note.value),
 
         tz: Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Kiev",
