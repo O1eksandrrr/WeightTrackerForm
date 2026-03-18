@@ -25,10 +25,9 @@
       --pinBg: rgba(21,31,54,.88);
       --pinBorder: rgba(95,141,255,.24);
       --pinGlow: rgba(95,141,255,.14);
-      --line: rgba(116,156,255,.52);
+      --line: rgba(116,156,255,.56);
 
       --radius: 22px;
-      --radiusSm: 16px;
       --btnRadius: 16px;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
     }
@@ -156,7 +155,7 @@
       position: relative;
       width: 100%;
       max-width: 760px;
-      min-height: 670px;
+      min-height: 635px;
       margin: 0 auto;
       border-radius: 20px;
     }
@@ -164,9 +163,9 @@
     .body-image-wrap{
       position:absolute;
       left:50%;
-      top:72px;
-      transform:translateX(-50%);
-      width: 230px;
+      top:42px;
+      transform:translateX(-45%);
+      width: 235px;
       z-index: 1;
       filter: drop-shadow(0 10px 24px rgba(0,0,0,.28));
     }
@@ -241,36 +240,74 @@
       flex: 0 0 auto;
     }
 
+    /* connector lines */
     .pin-line{
       position:absolute;
-      background: var(--line);
-      opacity: .9;
-      border-radius: 999px;
+      pointer-events:none;
     }
 
+    .pin-line::before,
+    .pin-line::after{
+      content:"";
+      position:absolute;
+      background: var(--line);
+      border-radius:999px;
+    }
+
+    /* left / right: horizontal + tiny vertical */
     .pin.left .pin-line,
     .pin.right .pin-line{
       top: 50%;
-      height: 2px;
+      width: 26px;
+      height: 14px;
       transform: translateY(-50%);
     }
 
     .pin.left .pin-line{
-      right: -18px;
-      width: 18px;
+      right: -26px;
     }
 
     .pin.right .pin-line{
-      left: -18px;
-      width: 18px;
+      left: -26px;
     }
 
+    .pin.left .pin-line::before,
+    .pin.right .pin-line::before{
+      top: 6px;
+      left: 0;
+      width: 26px;
+      height: 2px;
+    }
+
+    .pin.left .pin-line::after,
+    .pin.right .pin-line::after{
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 14px;
+    }
+
+    /* top: vertical + short horizontal */
     .pin.top .pin-line{
       left: 50%;
-      transform: translateX(-50%);
       top: 100%;
+      width: 20px;
+      height: 24px;
+      transform: translateX(-50%);
+    }
+
+    .pin.top .pin-line::before{
+      left: 9px;
+      top: 0;
       width: 2px;
-      height: 18px;
+      height: 24px;
+    }
+
+    .pin.top .pin-line::after{
+      left: 0;
+      bottom: 0;
+      width: 20px;
+      height: 2px;
     }
 
     .bottom-block .field + .field{
@@ -400,38 +437,38 @@
     /* mobile-first positions */
     .pin-shoulders{
       top: 0;
-      left: 50%;
+      left: 54%;
       transform: translateX(-50%);
       width: 128px;
     }
 
     .pin-biceps{
-      top: 182px;
+      top: 148px;
       left: 4px;
     }
 
     .pin-chest{
-      top: 182px;
+      top: 146px;
       right: 4px;
     }
 
     .pin-forearm{
-      top: 294px;
+      top: 270px;
       left: 4px;
     }
 
     .pin-waist{
-      top: 296px;
+      top: 274px;
       right: 4px;
     }
 
     .pin-hips{
-      top: 406px;
+      top: 392px;
       right: 4px;
     }
 
     .pin-calf{
-      top: 522px;
+      top: 500px;
       left: 8px;
     }
 
@@ -449,12 +486,13 @@
       }
 
       .body-layout{
-        min-height: 760px;
+        min-height: 715px;
       }
 
       .body-image-wrap{
-        top: 78px;
+        top: 46px;
         width: 255px;
+        transform: translateX(-44%);
       }
 
       .pin{
@@ -469,52 +507,65 @@
         height: 38px;
       }
 
+      .pin.left .pin-line,
+      .pin.right .pin-line{
+        width: 32px;
+      }
+
       .pin.left .pin-line{
-        right: -24px;
-        width: 24px;
+        right: -32px;
       }
 
       .pin.right .pin-line{
-        left: -24px;
-        width: 24px;
+        left: -32px;
+      }
+
+      .pin.left .pin-line::before,
+      .pin.right .pin-line::before{
+        width: 32px;
       }
 
       .pin.top .pin-line{
-        height: 22px;
+        height: 28px;
+      }
+
+      .pin.top .pin-line::before{
+        height: 28px;
       }
 
       .pin-shoulders{
         top: 0;
+        left: 55%;
         width: 146px;
       }
 
       .pin-biceps{
-        top: 210px;
+        top: 178px;
         left: 20px;
       }
 
       .pin-chest{
-        top: 210px;
+        top: 174px;
         right: 20px;
       }
 
       .pin-forearm{
-        top: 340px;
+        top: 318px;
         left: 20px;
       }
 
       .pin-waist{
-        top: 340px;
+        top: 320px;
         right: 20px;
       }
 
       .pin-hips{
-        top: 468px;
+        top: 454px;
         right: 20px;
       }
 
       .pin-calf{
-        top: 590px;
+        top: 572px;
         left: 26px;
       }
     }
@@ -740,9 +791,7 @@
     const theme = qs.get("theme");
     const gender = (qs.get("gender") || "male").toLowerCase();
 
-    if (theme) {
-      document.body.setAttribute("data-theme", theme);
-    }
+    if (theme) document.body.setAttribute("data-theme", theme);
 
     const dateEl = document.getElementById("date");
     const today = new Date();
@@ -853,7 +902,6 @@
         type: "body_checkin_visual",
         gender,
         date: form.date.value,
-
         shoulders_cm: toNumOrNull(form.shoulders_cm.value),
         chest_cm: toNumOrNull(form.chest_cm.value),
         waist_cm: toNumOrNull(form.waist_cm.value),
@@ -861,13 +909,10 @@
         biceps_cm: toNumOrNull(form.biceps_cm.value),
         forearm_cm: toNumOrNull(form.forearm_cm.value),
         calf_cm: toNumOrNull(form.calf_cm.value),
-
         weight_kg: weight,
         note: pickOrNull(form.note.value),
-
         tz: Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Kiev",
         source: "webapp",
-
         telegram: tg ? {
           initData: tg.initData || null,
           user: tg.initDataUnsafe?.user || null
