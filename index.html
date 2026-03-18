@@ -22,10 +22,10 @@
       --inputBorder: rgba(255,255,255,.08);
       --inputFocus: rgba(95,141,255,.2);
 
-      --pinBg: rgba(21,31,54,.88);
-      --pinBorder: rgba(95,141,255,.24);
-      --pinGlow: rgba(95,141,255,.14);
-      --line: rgba(116,156,255,.56);
+      --pinBg: rgba(21,31,54,.86);
+      --pinBorder: rgba(95,141,255,.20);
+      --pinGlow: rgba(95,141,255,.12);
+      --line: rgba(116,156,255,.60);
 
       --radius: 22px;
       --btnRadius: 16px;
@@ -155,7 +155,7 @@
       position: relative;
       width: 100%;
       max-width: 760px;
-      min-height: 635px;
+      min-height: 620px;
       margin: 0 auto;
       border-radius: 20px;
     }
@@ -163,9 +163,9 @@
     .body-image-wrap{
       position:absolute;
       left:50%;
-      top:42px;
-      transform:translateX(-45%);
-      width: 235px;
+      top:52px;
+      transform:translateX(-44%);
+      width: 215px;
       z-index: 1;
       filter: drop-shadow(0 10px 24px rgba(0,0,0,.28));
     }
@@ -180,27 +180,27 @@
 
     .pin{
       position:absolute;
-      width: 116px;
+      width: 102px;
       z-index: 2;
     }
 
     .pin-card{
       position: relative;
-      background: linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.008)), var(--pinBg);
+      background: linear-gradient(180deg, rgba(255,255,255,.016), rgba(255,255,255,.008)), var(--pinBg);
       border: 1px solid var(--pinBorder);
-      border-radius: 18px;
-      padding: 7px;
+      border-radius: 16px;
+      padding: 6px;
       box-shadow:
-        0 8px 20px rgba(0,0,0,.2),
+        0 8px 18px rgba(0,0,0,.18),
         inset 0 1px 0 rgba(255,255,255,.02);
       backdrop-filter: blur(6px);
     }
 
     .pin.active .pin-card{
-      border-color: rgba(95,141,255,.5);
+      border-color: rgba(95,141,255,.48);
       box-shadow:
         0 0 0 3px var(--pinGlow),
-        0 8px 20px rgba(0,0,0,.2);
+        0 8px 18px rgba(0,0,0,.18);
     }
 
     .pin-head{
@@ -212,17 +212,17 @@
     }
 
     .pin-title{
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
-      line-height: 1.15;
+      line-height: 1.1;
       padding-top: 2px;
     }
 
     .pin-input{
-      height: 36px;
-      padding: 8px 10px;
-      font-size: 13px;
-      border-radius: 12px;
+      height: 34px;
+      padding: 7px 10px;
+      font-size: 12px;
+      border-radius: 11px;
     }
 
     .mini-help{
@@ -230,17 +230,16 @@
       border: 1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.04);
       color: var(--text);
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 999px;
       cursor:pointer;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       line-height:1;
       flex: 0 0 auto;
     }
 
-    /* connector lines */
     .pin-line{
       position:absolute;
       pointer-events:none;
@@ -254,28 +253,27 @@
       border-radius:999px;
     }
 
-    /* left / right: horizontal + tiny vertical */
     .pin.left .pin-line,
     .pin.right .pin-line{
       top: 50%;
-      width: 26px;
-      height: 14px;
+      width: 22px;
+      height: 12px;
       transform: translateY(-50%);
     }
 
     .pin.left .pin-line{
-      right: -26px;
+      right: -22px;
     }
 
     .pin.right .pin-line{
-      left: -26px;
+      left: -22px;
     }
 
     .pin.left .pin-line::before,
     .pin.right .pin-line::before{
-      top: 6px;
+      top: 5px;
       left: 0;
-      width: 26px;
+      width: 22px;
       height: 2px;
     }
 
@@ -284,29 +282,28 @@
       top: 0;
       right: 0;
       width: 2px;
-      height: 14px;
+      height: 12px;
     }
 
-    /* top: vertical + short horizontal */
     .pin.top .pin-line{
       left: 50%;
       top: 100%;
-      width: 20px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       transform: translateX(-50%);
     }
 
     .pin.top .pin-line::before{
-      left: 9px;
+      left: 8px;
       top: 0;
       width: 2px;
-      height: 24px;
+      height: 18px;
     }
 
     .pin.top .pin-line::after{
       left: 0;
       bottom: 0;
-      width: 20px;
+      width: 18px;
       height: 2px;
     }
 
@@ -437,39 +434,39 @@
     /* mobile-first positions */
     .pin-shoulders{
       top: 0;
-      left: 54%;
+      left: 56%;
       transform: translateX(-50%);
-      width: 128px;
+      width: 112px;
     }
 
     .pin-biceps{
-      top: 148px;
-      left: 4px;
+      top: 162px;
+      left: 6px;
     }
 
     .pin-chest{
-      top: 146px;
-      right: 4px;
+      top: 160px;
+      right: 6px;
     }
 
     .pin-forearm{
-      top: 270px;
-      left: 4px;
+      top: 292px;
+      left: 6px;
     }
 
     .pin-waist{
-      top: 274px;
-      right: 4px;
+      top: 294px;
+      right: 6px;
     }
 
     .pin-hips{
-      top: 392px;
-      right: 4px;
+      top: 412px;
+      right: 6px;
     }
 
     .pin-calf{
-      top: 500px;
-      left: 8px;
+      top: 522px;
+      left: 12px;
     }
 
     @media (min-width: 700px){
@@ -486,87 +483,87 @@
       }
 
       .body-layout{
-        min-height: 715px;
+        min-height: 700px;
       }
 
       .body-image-wrap{
-        top: 46px;
-        width: 255px;
-        transform: translateX(-44%);
+        top: 54px;
+        width: 240px;
+        transform: translateX(-43%);
       }
 
       .pin{
-        width: 128px;
+        width: 112px;
       }
 
       .pin-title{
-        font-size: 11px;
+        font-size: 10px;
       }
 
       .pin-input{
-        height: 38px;
+        height: 35px;
       }
 
       .pin.left .pin-line,
       .pin.right .pin-line{
-        width: 32px;
+        width: 28px;
       }
 
       .pin.left .pin-line{
-        right: -32px;
+        right: -28px;
       }
 
       .pin.right .pin-line{
-        left: -32px;
+        left: -28px;
       }
 
       .pin.left .pin-line::before,
       .pin.right .pin-line::before{
-        width: 32px;
+        width: 28px;
       }
 
       .pin.top .pin-line{
-        height: 28px;
+        height: 20px;
       }
 
       .pin.top .pin-line::before{
-        height: 28px;
+        height: 20px;
       }
 
       .pin-shoulders{
         top: 0;
-        left: 55%;
-        width: 146px;
+        left: 57%;
+        width: 122px;
       }
 
       .pin-biceps{
-        top: 178px;
-        left: 20px;
+        top: 182px;
+        left: 22px;
       }
 
       .pin-chest{
-        top: 174px;
-        right: 20px;
+        top: 178px;
+        right: 22px;
       }
 
       .pin-forearm{
-        top: 318px;
-        left: 20px;
+        top: 326px;
+        left: 22px;
       }
 
       .pin-waist{
-        top: 320px;
-        right: 20px;
+        top: 328px;
+        right: 22px;
       }
 
       .pin-hips{
-        top: 454px;
-        right: 20px;
+        top: 456px;
+        right: 22px;
       }
 
       .pin-calf{
         top: 572px;
-        left: 26px;
+        left: 28px;
       }
     }
 
