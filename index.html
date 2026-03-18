@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Трекер замірів тіла</title>
 
   <style>
@@ -13,22 +13,21 @@
       --text: #eef2ff;
       --muted: rgba(238,242,255,.72);
       --border: rgba(238,242,255,.08);
-      --shadow: 0 14px 32px rgba(0,0,0,.34);
+      --shadow: 0 10px 24px rgba(0,0,0,.28);
 
       --primary: #5f8dff;
       --primaryText: #091224;
 
       --inputBg: rgba(255,255,255,.045);
       --inputBorder: rgba(255,255,255,.08);
-      --inputFocus: rgba(95,141,255,.2);
+      --inputFocus: rgba(95,141,255,.18);
 
       --pinBg: rgba(21,31,54,.86);
       --pinBorder: rgba(95,141,255,.20);
       --pinGlow: rgba(95,141,255,.12);
-      --line: rgba(116,156,255,.60);
 
-      --radius: 22px;
-      --btnRadius: 16px;
+      --radius: 20px;
+      --btnRadius: 14px;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
     }
 
@@ -47,29 +46,33 @@
     }
 
     .wrap{
-      max-width: 860px;
+      max-width: 760px;
       margin: 0 auto;
-      padding: 14px 12px 26px;
+      padding: 8px 10px 10px;
+      height: 100svh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .header{
-      margin-bottom: 14px;
+      margin-bottom: 6px;
+      flex: 0 0 auto;
     }
 
     .title{
       margin:0;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.1;
       letter-spacing: -.02em;
     }
 
     .subtitle{
-      margin: 8px 0 0;
+      margin: 4px 0 0;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.38;
-      max-width: 660px;
+      font-size: 11px;
+      line-height: 1.25;
     }
 
     .card{
@@ -77,28 +80,41 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 14px;
+      padding: 8px;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    form{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      gap: 8px;
     }
 
     .field{
       display:flex;
       flex-direction:column;
-      gap: 8px;
+      gap: 4px;
       min-width:0;
     }
 
     label{
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
       display:flex;
       align-items:center;
-      gap:8px;
-      line-height:1.2;
+      gap:6px;
+      line-height:1.15;
     }
 
     .badge{
-      font-size:11px;
-      padding:3px 10px;
+      font-size:10px;
+      padding:2px 8px;
       border-radius:999px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
@@ -106,68 +122,61 @@
       white-space: nowrap;
     }
 
-    input, textarea{
+    input{
       width:100%;
-      border-radius: 16px;
+      border-radius: 12px;
       border:1px solid var(--inputBorder);
       background: var(--inputBg);
       color: var(--text);
-      padding: 12px 14px;
-      font-size: 15px;
+      padding: 8px 10px;
+      font-size: 13px;
       outline:none;
       transition: border-color .15s, box-shadow .15s, background .15s;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
     }
 
-    input::placeholder,
-    textarea::placeholder{
+    input::placeholder{
       color: rgba(238,242,255,.38);
     }
 
-    input:focus, textarea:focus{
+    input:focus{
       border-color: rgba(95,141,255,.42);
-      box-shadow: 0 0 0 4px var(--inputFocus);
-    }
-
-    textarea{
-      min-height: 96px;
-      resize: vertical;
-      line-height: 1.4;
+      box-shadow: 0 0 0 3px var(--inputFocus);
     }
 
     .top-block,
     .bottom-block{
-      margin-bottom: 14px;
+      flex: 0 0 auto;
     }
 
     .body-card{
       border: 1px solid var(--border);
-      border-radius: 24px;
+      border-radius: 20px;
       background:
         radial-gradient(circle at center, rgba(95,141,255,.05), transparent 54%),
         rgba(255,255,255,.018);
-      padding: 8px;
-      margin-bottom: 14px;
+      padding: 6px;
+      flex: 1 1 auto;
+      min-height: 0;
       overflow: hidden;
     }
 
     .body-layout{
       position: relative;
       width: 100%;
-      max-width: 760px;
-      min-height: 620px;
-      margin: 0 auto;
-      border-radius: 20px;
+      height: 100%;
+      min-height: 360px;
+      border-radius: 16px;
     }
 
     .body-image-wrap{
       position:absolute;
       left:50%;
-      top:52px;
-      transform:translateX(-44%);
-      width: 215px;
+      top:48%;
+      transform:translate(-50%, -50%);
+      width: 118px;
       z-index: 1;
-      filter: drop-shadow(0 10px 24px rgba(0,0,0,.28));
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.24));
     }
 
     .body-image{
@@ -185,13 +194,12 @@
     }
 
     .pin-card{
-      position: relative;
       background: linear-gradient(180deg, rgba(255,255,255,.016), rgba(255,255,255,.008)), var(--pinBg);
       border: 1px solid var(--pinBorder);
-      border-radius: 16px;
-      padding: 6px;
+      border-radius: 14px;
+      padding: 5px;
       box-shadow:
-        0 8px 18px rgba(0,0,0,.18),
+        0 6px 14px rgba(0,0,0,.16),
         inset 0 1px 0 rgba(255,255,255,.02);
       backdrop-filter: blur(6px);
     }
@@ -199,30 +207,30 @@
     .pin.active .pin-card{
       border-color: rgba(95,141,255,.48);
       box-shadow:
-        0 0 0 3px var(--pinGlow),
-        0 8px 18px rgba(0,0,0,.18);
+        0 0 0 2px var(--pinGlow),
+        0 6px 14px rgba(0,0,0,.16);
     }
 
     .pin-head{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:6px;
-      margin-bottom: 6px;
+      gap:4px;
+      margin-bottom: 4px;
     }
 
     .pin-title{
       font-size: 10px;
       color: var(--muted);
-      line-height: 1.1;
-      padding-top: 2px;
+      line-height: 1.05;
+      padding-top: 1px;
     }
 
     .pin-input{
-      height: 34px;
-      padding: 7px 10px;
+      height: 30px;
+      padding: 6px 8px;
       font-size: 12px;
-      border-radius: 11px;
+      border-radius: 10px;
     }
 
     .mini-help{
@@ -230,101 +238,72 @@
       border: 1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.04);
       color: var(--text);
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 999px;
       cursor:pointer;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       line-height:1;
       flex: 0 0 auto;
     }
 
-    .pin-line{
-      position:absolute;
-      pointer-events:none;
+    /* 4 рівні */
+    .pin-shoulders{
+      top: 4%;
+      right: 2%;
     }
 
-    .pin-line::before,
-    .pin-line::after{
-      content:"";
-      position:absolute;
-      background: var(--line);
-      border-radius:999px;
+    .pin-biceps{
+      top: 25%;
+      left: 1%;
     }
 
-    .pin.left .pin-line,
-    .pin.right .pin-line{
-      top: 50%;
-      width: 22px;
-      height: 12px;
-      transform: translateY(-50%);
+    .pin-chest{
+      top: 25%;
+      right: 1%;
     }
 
-    .pin.left .pin-line{
-      right: -22px;
+    .pin-forearm{
+      top: 49%;
+      left: 1%;
     }
 
-    .pin.right .pin-line{
-      left: -22px;
+    .pin-waist{
+      top: 49%;
+      right: 1%;
     }
 
-    .pin.left .pin-line::before,
-    .pin.right .pin-line::before{
-      top: 5px;
-      left: 0;
-      width: 22px;
-      height: 2px;
+    .pin-calf{
+      top: 73%;
+      left: 1%;
     }
 
-    .pin.left .pin-line::after,
-    .pin.right .pin-line::after{
-      top: 0;
-      right: 0;
-      width: 2px;
-      height: 12px;
+    .pin-hips{
+      top: 73%;
+      right: 1%;
     }
 
-    .pin.top .pin-line{
-      left: 50%;
-      top: 100%;
-      width: 18px;
-      height: 18px;
-      transform: translateX(-50%);
-    }
-
-    .pin.top .pin-line::before{
-      left: 8px;
-      top: 0;
-      width: 2px;
-      height: 18px;
-    }
-
-    .pin.top .pin-line::after{
-      left: 0;
-      bottom: 0;
-      width: 18px;
-      height: 2px;
-    }
-
-    .bottom-block .field + .field{
-      margin-top: 12px;
+    .bottom-grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
 
     .actions{
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 14px;
+      gap:8px;
+      flex-wrap:nowrap;
+      flex: 0 0 auto;
     }
 
     .btn{
       appearance:none;
       border:0;
       border-radius: var(--btnRadius);
-      padding: 13px 16px;
+      padding: 11px 12px;
       font-weight: 800;
-      font-size: 15px;
+      font-size: 14px;
       cursor:pointer;
       transition: transform .06s, filter .15s, opacity .15s;
       user-select:none;
@@ -338,32 +317,32 @@
       background: var(--primary);
       color: var(--primaryText);
       flex:1;
-      min-width:170px;
-      box-shadow: 0 10px 24px rgba(95,141,255,.18);
+      box-shadow: 0 8px 18px rgba(95,141,255,.18);
     }
 
     .btn-ghost{
       background: transparent;
       color: var(--text);
       border:1px solid var(--border);
+      min-width: 110px;
     }
 
     .hint{
-      margin-top: 12px;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.42;
+      font-size: 10px;
+      line-height: 1.25;
+      flex: 0 0 auto;
     }
 
     .msg{
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 14px;
+      padding: 8px 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,.03);
-      font-size: 13px;
-      line-height: 1.35;
+      font-size: 12px;
+      line-height: 1.3;
       display:none;
+      flex: 0 0 auto;
     }
 
     .msg.ok{ border-color: rgba(43,213,118,.35); }
@@ -386,13 +365,13 @@
 
     .modal-card{
       width:100%;
-      max-width: 420px;
+      max-width: 380px;
       background: var(--card-soft);
       color: var(--text);
       border:1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 18px;
       box-shadow: var(--shadow);
-      padding: 16px;
+      padding: 14px;
     }
 
     .modal-top{
@@ -400,11 +379,11 @@
       align-items:flex-start;
       justify-content:space-between;
       gap:12px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .modal-title{
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       line-height: 1.2;
       margin:0;
@@ -412,8 +391,8 @@
 
     .modal-close{
       appearance:none;
-      width:32px;
-      height:32px;
+      width:30px;
+      height:30px;
       border-radius:999px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.04);
@@ -426,145 +405,27 @@
 
     .modal-text{
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.48;
+      font-size: 13px;
+      line-height: 1.42;
       white-space: pre-line;
     }
 
-    /* mobile-first positions */
-    .pin-shoulders{
-      top: 0;
-      left: 56%;
-      transform: translateX(-50%);
-      width: 112px;
-    }
-
-    .pin-biceps{
-      top: 15%;
-      left: 3%;
-    }
-
-    .pin-chest{
-      top: 13%;
-      right: 4%;
-    }
-
-    .pin-forearm{
-      top: 292px;
-      left: 6px;
-    }
-
-    .pin-waist{
-      top: 294px;
-      right: 6px;
-    }
-
-    .pin-hips{
-      top: 412px;
-      right: 6px;
-    }
-
-    .pin-calf{
-      top: 522px;
-      left: 12px;
-    }
-
     @media (min-width: 700px){
-      .wrap{
-        padding: 18px 16px 30px;
-      }
-
-      .card{
-        padding: 16px;
-      }
-
-      .body-card{
-        padding: 12px;
-      }
-
-      .body-layout{
-        min-height: 700px;
-      }
-
       .body-image-wrap{
-        top: 54px;
-        width: 240px;
-        transform: translateX(-43%);
+        width: 140px;
       }
 
       .pin{
-        width: 112px;
+        width: 118px;
       }
 
-      .pin-title{
-        font-size: 10px;
-      }
-
-      .pin-input{
-        height: 35px;
-      }
-
-      .pin.left .pin-line,
-      .pin.right .pin-line{
-        width: 28px;
-      }
-
-      .pin.left .pin-line{
-        right: -28px;
-      }
-
-      .pin.right .pin-line{
-        left: -28px;
-      }
-
-      .pin.left .pin-line::before,
-      .pin.right .pin-line::before{
-        width: 28px;
-      }
-
-      .pin.top .pin-line{
-        height: 20px;
-      }
-
-      .pin.top .pin-line::before{
-        height: 20px;
-      }
-
-      .pin-shoulders{
-        top: 0;
-        left: 57%;
-        width: 122px;
-      }
-
-      .pin-biceps{
-        top: 182px;
-        left: 22px;
-      }
-
-      .pin-chest{
-        top: 178px;
-        right: 22px;
-      }
-
-      .pin-forearm{
-        top: 326px;
-        left: 22px;
-      }
-
-      .pin-waist{
-        top: 328px;
-        right: 22px;
-      }
-
-      .pin-hips{
-        top: 456px;
-        right: 22px;
-      }
-
-      .pin-calf{
-        top: 572px;
-        left: 28px;
-      }
+      .pin-shoulders{ top: 5%; right: 6%; }
+      .pin-biceps{ top: 24%; left: 5%; }
+      .pin-chest{ top: 24%; right: 5%; }
+      .pin-forearm{ top: 48%; left: 5%; }
+      .pin-waist{ top: 48%; right: 5%; }
+      .pin-calf{ top: 72%; left: 5%; }
+      .pin-hips{ top: 72%; right: 5%; }
     }
 
     body[data-theme="light-clean"]{
@@ -582,7 +443,6 @@
       --pinBg: rgba(255,255,255,.95);
       --pinBorder: rgba(46,107,255,.20);
       --pinGlow: rgba(46,107,255,.10);
-      --line: rgba(46,107,255,.38);
       --shadow: 0 10px 24px rgba(13,18,32,.08);
     }
 
@@ -601,7 +461,6 @@
       --pinBg: rgba(16,28,22,.90);
       --pinBorder: rgba(52,211,153,.24);
       --pinGlow: rgba(52,211,153,.10);
-      --line: rgba(52,211,153,.42);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
     }
   </style>
@@ -629,8 +488,7 @@
               <img id="bodyImage" class="body-image" src="./images/MAN.png" alt="Силует тіла" />
             </div>
 
-            <div class="pin pin-shoulders top" data-part="shoulders">
-              <div class="pin-line"></div>
+            <div class="pin pin-shoulders" data-part="shoulders">
               <div class="pin-card">
                 <div class="pin-head">
                   <div class="pin-title">Плечі (см)</div>
@@ -640,8 +498,7 @@
               </div>
             </div>
 
-            <div class="pin pin-biceps left" data-part="biceps">
-              <div class="pin-line"></div>
+            <div class="pin pin-biceps" data-part="biceps">
               <div class="pin-card">
                 <div class="pin-head">
                   <div class="pin-title">Біцепс (см)</div>
@@ -651,8 +508,7 @@
               </div>
             </div>
 
-            <div class="pin pin-chest right" data-part="chest">
-              <div class="pin-line"></div>
+            <div class="pin pin-chest" data-part="chest">
               <div class="pin-card">
                 <div class="pin-head">
                   <div class="pin-title">Груди (см)</div>
@@ -662,8 +518,7 @@
               </div>
             </div>
 
-            <div class="pin pin-forearm left" data-part="forearm">
-              <div class="pin-line"></div>
+            <div class="pin pin-forearm" data-part="forearm">
               <div class="pin-card">
                 <div class="pin-head">
                   <div class="pin-title">Передпліччя (см)</div>
@@ -673,8 +528,7 @@
               </div>
             </div>
 
-            <div class="pin pin-waist right" data-part="waist">
-              <div class="pin-line"></div>
+            <div class="pin pin-waist" data-part="waist">
               <div class="pin-card">
                 <div class="pin-head">
                   <div class="pin-title">Талія (см)</div>
@@ -684,19 +538,7 @@
               </div>
             </div>
 
-            <div class="pin pin-hips right" data-part="hips">
-              <div class="pin-line"></div>
-              <div class="pin-card">
-                <div class="pin-head">
-                  <div class="pin-title">Стегна (см)</div>
-                  <button class="mini-help" type="button" data-help="hips">i</button>
-                </div>
-                <input class="pin-input" name="hips_cm" type="number" step="0.1" inputmode="decimal" placeholder="104" />
-              </div>
-            </div>
-
-            <div class="pin pin-calf left" data-part="calf">
-              <div class="pin-line"></div>
+            <div class="pin pin-calf" data-part="calf">
               <div class="pin-card">
                 <div class="pin-head">
                   <div class="pin-title">Гомілка (см)</div>
@@ -705,10 +547,20 @@
                 <input class="pin-input" name="calf_cm" type="number" step="0.1" inputmode="decimal" placeholder="38" />
               </div>
             </div>
+
+            <div class="pin pin-hips" data-part="hips">
+              <div class="pin-card">
+                <div class="pin-head">
+                  <div class="pin-title">Стегна (см)</div>
+                  <button class="mini-help" type="button" data-help="hips">i</button>
+                </div>
+                <input class="pin-input" name="hips_cm" type="number" step="0.1" inputmode="decimal" placeholder="104" />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="bottom-block">
+        <div class="bottom-grid">
           <div class="field">
             <label for="weight">Вага (кг) <span class="badge">обовʼязково</span></label>
             <input id="weight" name="weight_kg" type="number" inputmode="decimal" step="0.1" min="20" max="300" placeholder="Напр. 82.4" required />
@@ -716,7 +568,7 @@
 
           <div class="field">
             <label for="note">Примітка</label>
-            <textarea id="note" name="note" maxlength="250" placeholder="Напр.: заміри вранці, після тренування, була затримка води..."></textarea>
+            <input id="note" name="note" type="text" maxlength="120" placeholder="Напр.: заміри вранці" />
           </div>
         </div>
 
@@ -726,7 +578,7 @@
         </div>
 
         <div class="hint">
-          Порада: заміри краще робити в однакових умовах і в тих самих точках тіла. Це важливіше за “ідеальну” точність одного разу.
+          Порада: міряй у тих самих точках тіла й в однакових умовах.
         </div>
 
         <div class="msg" id="msg"></div>
@@ -756,31 +608,31 @@
     const helpContent = {
       shoulders: {
         title: "Плечі",
-        text: "Міряй по найширшій частині плечового поясу.\nСтрічка має проходити рівно, без перекосу.\nНе затягуй занадто сильно."
+        text: "Міряй по найширшій частині плечового поясу. Стрічка має проходити рівно, без перекосу."
       },
       chest: {
         title: "Груди",
-        text: "Міряй по найширшій частині грудної клітки.\nСтрічку тримай горизонтально.\nНе надувай груди спеціально."
+        text: "Міряй по найширшій частині грудної клітки. Стрічку тримай горизонтально."
       },
       waist: {
         title: "Талія",
-        text: "Міряй найвужчу частину талії або стабільну точку трохи вище пупка.\nГоловне — завжди міряти в одному й тому ж місці."
+        text: "Міряй найвужчу частину талії або одну стабільну точку трохи вище пупка."
       },
       hips: {
         title: "Стегна",
-        text: "Міряй по найширшій частині таза / сідниць.\nСтій рівно, ноги разом.\nСтрічка має йти паралельно підлозі."
+        text: "Міряй по найширшій частині таза / сідниць. Стрічка має йти паралельно підлозі."
       },
       biceps: {
         title: "Біцепс",
-        text: "Міряй руку в найширшій частині плеча.\nКраще без сильного напруження, якщо хочеш стабільні заміри."
+        text: "Міряй руку в найширшій частині плеча. Краще без сильного напруження."
       },
       forearm: {
         title: "Передпліччя",
-        text: "Міряй у найширшій частині передпліччя.\nРуку тримай розслабленою."
+        text: "Міряй у найширшій частині передпліччя. Руку тримай розслабленою."
       },
       calf: {
         title: "Гомілка",
-        text: "Міряй у найширшій частині литки.\nВага тіла має бути розподілена рівномірно на обидві ноги."
+        text: "Міряй у найширшій частині литки. Вага тіла рівномірно на обидві ноги."
       }
     };
 
@@ -860,7 +712,6 @@
     pins.forEach(pin => {
       const part = pin.dataset.part;
       const input = pin.querySelector("input");
-
       input.addEventListener("focus", () => activatePart(part));
       input.addEventListener("click", () => activatePart(part));
     });
